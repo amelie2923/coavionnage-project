@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Ad;
+use App\Models\TypeAd;
 use Illuminate\Http\Request;
 
-class AdController extends Controller
+class TypeAdController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AdController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Ad  $ad
+     * @param  \App\Models\TypeAd  $typeAd
      * @return \Illuminate\Http\Response
      */
-    public function show(Ad $ad)
+    public function show(TypeAd $typeAd)
     {
         //
     }
@@ -52,10 +52,10 @@ class AdController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ad  $ad
+     * @param  \App\Models\TypeAd  $typeAd
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ad $ad)
+    public function edit(TypeAd $typeAd)
     {
         //
     }
@@ -64,10 +64,10 @@ class AdController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ad  $ad
+     * @param  \App\Models\TypeAd  $typeAd
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ad $ad)
+    public function update(Request $request, TypeAd $typeAd)
     {
         //
     }
@@ -75,10 +75,10 @@ class AdController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ad  $ad
+     * @param  \App\Models\TypeAd  $typeAd
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ad $ad)
+    public function destroy(TypeAd $typeAd)
     {
         //
     }

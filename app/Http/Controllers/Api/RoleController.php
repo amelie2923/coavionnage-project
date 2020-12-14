@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\TypeAd;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class TypeAdController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TypeAdController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TypeAd  $typeAd
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(TypeAd $typeAd)
+    public function show(Role $role)
     {
         //
     }
@@ -52,10 +52,10 @@ class TypeAdController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TypeAd  $typeAd
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(TypeAd $typeAd)
+    public function edit(Role $role)
     {
         //
     }
@@ -64,10 +64,10 @@ class TypeAdController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TypeAd  $typeAd
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TypeAd $typeAd)
+    public function update(Request $request, Role $role)
     {
         //
     }
@@ -75,10 +75,10 @@ class TypeAdController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TypeAd  $typeAd
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeAd $typeAd)
+    public function destroy(Role $role)
     {
         //
     }

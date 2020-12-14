@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\TypeSearch;
+use App\Models\Messaging;
 use Illuminate\Http\Request;
 
-class TypeSearchController extends Controller
+class MessagingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TypeSearchController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TypeSearch  $typeSearch
+     * @param  \App\Models\Messaging  $messaging
      * @return \Illuminate\Http\Response
      */
-    public function show(TypeSearch $typeSearch)
+    public function show(Messaging $messaging)
     {
         //
     }
@@ -52,10 +52,10 @@ class TypeSearchController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TypeSearch  $typeSearch
+     * @param  \App\Models\Messaging  $messaging
      * @return \Illuminate\Http\Response
      */
-    public function edit(TypeSearch $typeSearch)
+    public function edit(Messaging $messaging)
     {
         //
     }
@@ -64,10 +64,10 @@ class TypeSearchController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TypeSearch  $typeSearch
+     * @param  \App\Models\Messaging  $messaging
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TypeSearch $typeSearch)
+    public function update(Request $request, Messaging $messaging)
     {
         //
     }
@@ -75,10 +75,10 @@ class TypeSearchController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TypeSearch  $typeSearch
+     * @param  \App\Models\Messaging  $messaging
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeSearch $typeSearch)
+    public function destroy(Messaging $messaging)
     {
         //
     }

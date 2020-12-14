@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Messaging;
+use App\Models\Alert;
 use Illuminate\Http\Request;
 
-class MessagingController extends Controller
+class AlertController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class MessagingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Messaging  $messaging
+     * @param  \App\Models\Alert  $alert
      * @return \Illuminate\Http\Response
      */
-    public function show(Messaging $messaging)
+    public function show(Alert $alert)
     {
         //
     }
@@ -52,10 +52,10 @@ class MessagingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Messaging  $messaging
+     * @param  \App\Models\Alert  $alert
      * @return \Illuminate\Http\Response
      */
-    public function edit(Messaging $messaging)
+    public function edit(Alert $alert)
     {
         //
     }
@@ -64,10 +64,10 @@ class MessagingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Messaging  $messaging
+     * @param  \App\Models\Alert  $alert
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Messaging $messaging)
+    public function update(Request $request, Alert $alert)
     {
         //
     }
@@ -75,10 +75,10 @@ class MessagingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Messaging  $messaging
+     * @param  \App\Models\Alert  $alert
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Messaging $messaging)
+    public function destroy(Alert $alert)
     {
         //
     }

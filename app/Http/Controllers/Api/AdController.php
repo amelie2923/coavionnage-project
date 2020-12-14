@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Favorite;
+use App\Models\Ad;
 use Illuminate\Http\Request;
 
-class FavoriteController extends Controller
+class AdController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class FavoriteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function show(Favorite $favorite)
+    public function show(Ad $ad)
     {
         //
     }
@@ -52,10 +52,10 @@ class FavoriteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function edit(Favorite $favorite)
+    public function edit(Ad $ad)
     {
         //
     }
@@ -64,10 +64,10 @@ class FavoriteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Favorite $favorite)
+    public function update(Request $request, Ad $ad)
     {
         //
     }
@@ -75,10 +75,10 @@ class FavoriteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Favorite $favorite)
+    public function destroy(Ad $ad)
     {
         //
     }

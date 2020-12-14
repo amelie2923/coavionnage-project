@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Alert;
+use App\Models\TypeSearch;
 use Illuminate\Http\Request;
 
-class AlertController extends Controller
+class TypeSearchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AlertController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Alert  $alert
+     * @param  \App\Models\TypeSearch  $typeSearch
      * @return \Illuminate\Http\Response
      */
-    public function show(Alert $alert)
+    public function show(TypeSearch $typeSearch)
     {
         //
     }
@@ -52,10 +52,10 @@ class AlertController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Alert  $alert
+     * @param  \App\Models\TypeSearch  $typeSearch
      * @return \Illuminate\Http\Response
      */
-    public function edit(Alert $alert)
+    public function edit(TypeSearch $typeSearch)
     {
         //
     }
@@ -64,10 +64,10 @@ class AlertController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Alert  $alert
+     * @param  \App\Models\TypeSearch  $typeSearch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Alert $alert)
+    public function update(Request $request, TypeSearch $typeSearch)
     {
         //
     }
@@ -75,10 +75,10 @@ class AlertController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Alert  $alert
+     * @param  \App\Models\TypeSearch  $typeSearch
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Alert $alert)
+    public function destroy(TypeSearch $typeSearch)
     {
         //
     }
