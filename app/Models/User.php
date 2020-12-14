@@ -1,43 +1,78 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+/**
+ * Class User
+ * 
+ * @property int $id
+ * @property string $email
+ * @property string $password
+ * @property string $name
+ * @property int $role_id
+ * @property bool $confirm
+ * @property string $picture
+ * 
+ * @property Role $role
+ * @property Collection|Ad[] $ads
+ * @property Collection|Alert[] $alerts
+ * @property Collection|Favorite[] $favorites
+ * @property Collection|Messaging[] $messagings
+ *
+ * @package App\Models
+ */
+class User extends Model
 {
-    use HasFactory, Notifiable;
+	protected $table = 'users';
+	public $timestamps = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+	protected $casts = [
+		'role_id' => 'int',
+		'confirm' => 'bool'
+	];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+	protected $hidden = [
+		'password'
+	];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+	protected $fillable = [
+		'email',
+		'password',
+		'name',
+		'role_id',
+		'confirm',
+		'picture'
+	];
+
+	public function role()
+	{
+		return $this->belongsTo(Role::class);
+	}
+
+	public function ads()
+	{
+		return $this->hasMany(Ad::class);
+	}
+
+	public function alerts()
+	{
+		return $this->hasMany(Alert::class);
+	}
+
+	public function favorites()
+	{
+		return $this->hasMany(Favorite::class);
+	}
+
+	public function messagings()
+	{
+		return $this->hasMany(Messaging::class, 'sender_id');
+	}
 }
