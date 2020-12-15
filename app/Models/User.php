@@ -11,15 +11,15 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class User
- * 
+ *
  * @property int $id
  * @property string $email
  * @property string $password
  * @property string $name
  * @property int $role_id
- * @property bool $confirm
+ * @property string $confirm
  * @property string $picture
- * 
+ *
  * @property Role $role
  * @property Collection|Ad[] $ads
  * @property Collection|Alert[] $alerts
@@ -34,8 +34,7 @@ class User extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'role_id' => 'int',
-		'confirm' => 'bool'
+		'role_id' => 'int'
 	];
 
 	protected $hidden = [
