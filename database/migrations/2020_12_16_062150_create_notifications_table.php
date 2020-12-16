@@ -4,23 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('email');
-            $table->string('password');
-            $table->string('name');
-            $table->integer('role_id')->index('role_id');
-            $table->boolean('confirm');
-            $table->string('picture');
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -31,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('notifications');
     }
 }
