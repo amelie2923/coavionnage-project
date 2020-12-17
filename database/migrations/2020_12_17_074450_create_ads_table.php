@@ -16,17 +16,16 @@ class CreateAdsTable extends Migration
         Schema::create('ads', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('user_id');
-            $table->integer('type_ad_id')->index('type_ad_id');
             $table->integer('type_search_id')->index('type_search_id');
             $table->date('date');
-            $table->string('departure');
-            $table->string('arrival');
-            $table->integer('number');
+            $table->string('departure_city');
+            $table->string('arrival_city');
+            $table->integer('number_animals');
             $table->text('description');
             $table->string('company');
-            $table->string('flight_number');
+            $table->string('image')->nullable();
             $table->timestamp('timestamp')->useCurrent();
-            $table->index(['user_id', 'type_ad_id', 'type_search_id'], 'user_id');
+            $table->index(['user_id', 'type_search_id'], 'user_id');
         });
     }
 

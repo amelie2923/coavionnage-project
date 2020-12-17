@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class User
- *
+ * 
  * @property int $id
  * @property string $email
  * @property string $password
@@ -19,12 +19,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $role_id
  * @property string $confirm
  * @property string $picture
- *
+ * 
  * @property Role $role
  * @property Collection|Ad[] $ads
  * @property Collection|Alert[] $alerts
  * @property Collection|Favorite[] $favorites
- * @property Collection|Messaging[] $messagings
  *
  * @package App\Models
  */
@@ -38,8 +37,7 @@ class User extends Model
 	];
 
 	protected $hidden = [
-		'password',
-		'confirm',
+		'password'
 	];
 
 	protected $fillable = [
@@ -69,10 +67,5 @@ class User extends Model
 	public function favorites()
 	{
 		return $this->hasMany(Favorite::class);
-	}
-
-	public function messagings()
-	{
-		return $this->hasMany(Messaging::class, 'sender_id');
 	}
 }

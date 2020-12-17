@@ -15,7 +15,6 @@ class AddForeignKeysToAdsTable extends Migration
     {
         Schema::table('ads', function (Blueprint $table) {
             $table->foreign('user_id', 'ads_user_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
-            $table->foreign('type_ad_id', 'type_ad_id')->references('id')->on('type_ad')->onUpdate('RESTRICT')->onDelete('RESTRICT');
             $table->foreign('type_search_id', 'type_search_id')->references('id')->on('type_search')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
@@ -29,7 +28,6 @@ class AddForeignKeysToAdsTable extends Migration
     {
         Schema::table('ads', function (Blueprint $table) {
             $table->dropForeign('ads_user_id');
-            $table->dropForeign('type_ad_id');
             $table->dropForeign('type_search_id');
         });
     }

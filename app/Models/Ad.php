@@ -15,19 +15,17 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id
  * @property int $user_id
- * @property int $type_ad_id
  * @property int $type_search_id
  * @property Carbon $date
- * @property string $departure
- * @property string $arrival
- * @property int $number
+ * @property string $departure_city
+ * @property string $arrival_city
+ * @property int $number_animals
  * @property string $description
  * @property string $company
- * @property string $flight_number
+ * @property string|null $image
  * @property Carbon $timestamp
  * 
  * @property User $user
- * @property TypeAd $type_ad
  * @property TypeSearch $type_search
  * @property Collection|Favorite[] $favorites
  *
@@ -40,9 +38,8 @@ class Ad extends Model
 
 	protected $casts = [
 		'user_id' => 'int',
-		'type_ad_id' => 'int',
 		'type_search_id' => 'int',
-		'number' => 'int'
+		'number_animals' => 'int'
 	];
 
 	protected $dates = [
@@ -52,26 +49,20 @@ class Ad extends Model
 
 	protected $fillable = [
 		'user_id',
-		'type_ad_id',
 		'type_search_id',
 		'date',
-		'departure',
-		'arrival',
-		'number',
+		'departure_city',
+		'arrival_city',
+		'number_animals',
 		'description',
 		'company',
-		'flight_number',
+		'image',
 		'timestamp'
 	];
 
 	public function user()
 	{
 		return $this->belongsTo(User::class);
-	}
-
-	public function type_ad()
-	{
-		return $this->belongsTo(TypeAd::class);
 	}
 
 	public function type_search()
