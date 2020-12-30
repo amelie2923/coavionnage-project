@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Messaging;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MessagingController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class MessagingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Messaging  $messaging
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Messaging $messaging)
+    public function show($id)
     {
         //
     }
@@ -43,10 +43,10 @@ class MessagingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Messaging  $messaging
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Messaging $messaging)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -54,10 +54,10 @@ class MessagingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Messaging  $messaging
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Messaging $messaging)
+    public function destroy($id)
     {
         //
     }
