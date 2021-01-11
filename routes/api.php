@@ -17,5 +17,9 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-Route::apiResource('users', UserController::class);
 
+
+Route::apiResource('users', UserController::class)->middleware('auth:api');
+
+
+Route::get('/ads', 'AdController@index');

@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Alert
- * 
+ *
  * @property int $id
  * @property string $arrival
  * @property string $departure
  * @property Carbon $date
  * @property int $user_id
- * 
+ *
  * @property User $user
  *
  * @package App\Models
