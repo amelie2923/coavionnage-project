@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Ad
- * 
+ *
  * @property int $id
  * @property int $user_id
  * @property int $type_search_id
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $company
  * @property string|null $image
  * @property Carbon $timestamp
- * 
+ *
  * @property User $user
  * @property TypeSearch $type_search
  * @property Collection|Favorite[] $favorites

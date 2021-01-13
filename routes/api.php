@@ -20,8 +20,9 @@ use App\Http\Controllers\Api\AdController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::resource('ads', AdController::class);
+
 
 Route::middleware('auth:api')->group( function () {
     Route::post('logout', [AuthController::class, 'logout']);
-    Route::resource('ads', AdController::class);
 });
