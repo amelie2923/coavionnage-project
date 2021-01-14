@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Models\LinkedSocialAccount;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -78,4 +79,9 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Favorite::class);
 	}
+
+	public function linkedSocialAccounts()
+  {
+    return $this->hasMany(LinkedSocialAccount::class);
+  }
 }

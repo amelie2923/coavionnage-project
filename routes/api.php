@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AdController;
 
@@ -18,11 +17,12 @@ use App\Http\Controllers\Api\AdController;
 |
 */
 
+// Public routes
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::resource('ads', AdController::class);
 
-
+//Protected routes
 Route::middleware('auth:api')->group( function () {
     Route::post('logout', [AuthController::class, 'logout']);
 });
