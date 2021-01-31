@@ -30,5 +30,8 @@ class AuthServiceProvider extends ServiceProvider
 
         // Passport::hashClientSecrets();
 
+        Passport::cookie('custom_laravel_token');
+
+
     }
 }
