@@ -24,7 +24,7 @@ class AuthController extends BaseController
         ]);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response(['errors' => $validator->errors()->all()], 422);
         }
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
@@ -46,7 +46,7 @@ class AuthController extends BaseController
         ]);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response(['errors' => $validator->errors()], 422);
         }
         $user = User::where('email', $request->email)->first();
         if ($user) {
