@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Role
- * 
+ *
  * @property int $id
  * @property string $name
- * 
+ *
  * @property Collection|User[] $users
  *
  * @package App\Models

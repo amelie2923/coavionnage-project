@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MakePasswordAndEmailFieldsNullableInUsersTable extends Migration
+class AddForeignKeysToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class MakePasswordAndEmailFieldsNullableInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('email')->nullable()->change();
-            $table->string('password')->nullable()->change();
+            $table->foreign('role_id', 'users_role_id')->references('id')->on('roles')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
 
@@ -27,8 +26,7 @@ class MakePasswordAndEmailFieldsNullableInUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('email')->change();
-            $table->string('password')->change();
+            $table->dropForeign('users_role_id');
         });
     }
 }

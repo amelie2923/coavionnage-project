@@ -54,10 +54,10 @@ class User extends Authenticatable
 		'email',
 		'password',
 		'name',
-		'role_id',
 		'confirm',
 		'remember_token',
-		'picture'
+		'picture',
+		'role_id',
 	];
 
 	public function role()
