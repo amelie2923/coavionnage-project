@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Ad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdController extends Controller
 {
@@ -14,9 +15,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        $ads = Ad::all();
-        return response()->json($ads);
-        return $this->sendResponse(AdResource::collection($ads), 'Ads retrieved successfully.');
+        return Ad::all();
     }
 
     /**
@@ -27,9 +26,7 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-
-        $validator = Validator::make($input, [
+        $validator = Validator::make($request->all(), [
             'type_search_id' => 'required',
             'date' => 'required',
             'departure_city' => 'required',
@@ -39,32 +36,24 @@ class AdController extends Controller
             'company' => 'required',
         ]);
 
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
+        if ($validator->fails())
+        {
+            return response(['errors' => $validator->errors()->all()], 422);
         }
 
-        $ad = Ad::create($input);
-
-        return $this->sendResponse(new AdResource($ad), 'Ad created successfully.');
+        Ad::create($request->all());
     }
 
-    /**
+   /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Add  $ad
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ad $ad)
     {
-        $ad = Ad::find($id);
-
-        if (is_null($ad)) {
-            return $this->sendError('Ad not found.');
-        }
-
-        return $this->sendResponse(new ProductResource($product), 'Product retrieved successfully.');
+        return $ad;
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -74,9 +63,7 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
-        $input = $request->all();
-
-        $validator = Validator::make($input, [
+        $validator = Validator::make($request->all(), [
             'type_search_id' => 'required',
             'date' => 'required',
             'departure_city' => 'required',
@@ -86,20 +73,12 @@ class AdController extends Controller
             'company' => 'required',
         ]);
 
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
+        if ($validator->fails())
+        {
+            return response(['errors' => $validator->errors()->all()], 422);
         }
 
-        $ad->type_search_id = $input['type_search_id'];
-        $ad->date = $input['date'];
-        $ad->departure_city = $input['departure_city'];
-        $ad->arrival_city = $input['arrival_city'];
-        $ad->number_animals = $input['number_animals'];
-        $ad->description = $input['description'];
-        $ad->company = $input['company'];
-        $ad->save();
-
-        return $this->sendResponse(new AdResource($ad), 'Ad updated successfully.');
+        $ad->update($request->all());
     }
 
     /**
@@ -111,7 +90,5 @@ class AdController extends Controller
     public function destroy(Ad $ad)
     {
         $ad->delete();
-
-        return $this->sendResponse([], 'Ad deleted successfully.');
     }
 }

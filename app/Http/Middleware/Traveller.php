@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AssociationMiddleware
+class Traveller
 {
     /**
      * Handle an incoming request.

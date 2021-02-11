@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class TravellerMiddleware
+class Association
 {
     /**
      * Handle an incoming request.
@@ -16,6 +16,8 @@ class TravellerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        $getRoleId = $request->user()->role_id;
         return $next($request);
+        console.log($getRoleId);
     }
 }

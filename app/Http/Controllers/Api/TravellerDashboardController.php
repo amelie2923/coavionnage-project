@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class TravellerDashboardController extends Controller
 {
+    // Get token of user logged by middleware
+    // Retrieve role_id of user
+    // Access to Dashboard if user role is 2
+
     /**
      * Display a listing of the resource.
      *
