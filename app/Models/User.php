@@ -83,5 +83,10 @@ class User extends Authenticatable
 	public function linkedSocialAccounts()
   {
     return $this->hasMany(LinkedSocialAccount::class);
-  }
+	}
+
+	public function sendPasswordResetNotification($token)
+	{
+    $this->notify(new \App\Notifications\MailResetPasswordNotification($token));
+	}
 }

@@ -16,8 +16,11 @@ class Association
      */
     public function handle(Request $request, Closure $next)
     {
-        $getRoleId = $request->user()->role_id;
+        if (auth('api')->user() && auth('api')->user()->role_id != 1)
+        {
+            $response = ['message' => 'You have not the good role!'];
+            return response($response, 403);
+        }
         return $next($request);
-        console.log($getRoleId);
     }
 }
