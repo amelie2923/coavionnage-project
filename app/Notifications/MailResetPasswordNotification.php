@@ -24,7 +24,7 @@ class MailResetPasswordNotification extends Notification
     public function __construct()
     {
         parent::__construct($token);
-        $this->pageUrl = 'localhost:8000';
+        $this->pageUrl = 'localhost:8080';
         // we can set whatever we want here, or use .env to set environmental variables
     }
 

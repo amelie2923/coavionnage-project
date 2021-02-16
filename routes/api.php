@@ -7,8 +7,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AdController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
-// use App\Http\Controllers\Api\ForgotPasswordController;
-// use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\PlaneTicketController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,16 +29,21 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('password/forgot-password', [AuthController::class, 'sendResetLinkResponse'])->name('password.sent');
     Route::post('password/reset', [AuthController::class, 'sendResetResponse'])->name('password.reset');
 
+    /* To do -> add to private routes */
     // Ads Routes -> add a middleware role -> and add to protected routes
     Route::middleware(['association'])->group(function () {
-        Route::get('ads', [AdController::class, 'index']);
-        Route::get('ads/{ad}', [AdController::class, 'show']);
         Route::post('ads/add', [AdController::class, 'store']);
         Route::put('ads/edit/{ad}', [AdController::class, 'update']);
         Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
     });
 
-    // Flights routes -> add a middleware role -> and add to protected routes
+    /* To do -> add to private routes */
+    // PlaneTickets routes -> add a middleware role -> and add to protected routes
+    Route::middleware(['traveller'])->group(function () {
+        Route::post('planetickets/add', [PlaneTicketController::class, 'store']);
+        Route::put('planetickets/edit/{id}', [PlaneTicketController::class, 'update']);
+        Route::delete('planetickets/delete/{id}', [PlaneTicketController::class,'destroy']);
+    });
 
     // Roles routes
     Route::get('roles', [RoleController::class, 'index']);
@@ -47,6 +52,14 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:api')->group( function () {
     // Auth Routes
     Route::post('logout', [AuthController::class, 'logout']);
+
+    //Ads Routes
+    Route::get('ads', [AdController::class, 'index']);
+    Route::get('ads/{ad}', [AdController::class, 'show']);
+
+    //Ads Routes
+    Route::get('planetickets', [PlaneTicketController::class, 'index']);
+    Route::get('planetickets/{id}', [PlaneTicketController::class, 'show']);
 
     // Users Routes
     Route::get('users', [UserController::class, 'index']);
