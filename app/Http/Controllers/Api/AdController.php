@@ -26,14 +26,22 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
+        $fullFileName = $request->file('image')->getClientOriginalName();
+        $fileName = pathinfo($fullFileName, PATHINFO_FILENAME);
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $file = $fileName.'_'.time().'.'.$extension;
+
+        $request->file('image')->storeAs('public/pictures', $file);
+
         $validator = Validator::make($request->all(), [
+            'animal_name' => 'required',
             'type_search_id' => 'required',
             'date' => 'required',
             'departure_city' => 'required',
             'arrival_city' => 'required',
-            'number_animals' => 'required',
             'description' => 'required',
             'company' => 'required',
+            'image' => 'required',
         ]);
 
         if ($validator->fails())
@@ -41,7 +49,18 @@ class AdController extends Controller
             return response(['errors' => $validator->errors()->all()], 422);
         }
 
-        Ad::create($request->all());
+        $ad = Ad::create(([
+            'animal_name' => $request->input('animal_name'),
+            'type_search_id' => $request->input('type_search_id'),
+            'date' => $request->input('date'),
+            'departure_city' => $request->input('departure_city'),
+            'arrival_city' =>$request->input('arrival_city'),
+            'description' => $request->input('description'),
+            'company' => $request->input('company'),
+            'image' => $file,
+            'user_id' => 25,
+        ]));
+        return response()->json($ad);
     }
 
    /**
@@ -64,13 +83,14 @@ class AdController extends Controller
     public function update(Request $request, Ad $ad)
     {
         $validator = Validator::make($request->all(), [
+            'animal_name' => 'required',
             'type_search_id' => 'required',
             'date' => 'required',
             'departure_city' => 'required',
             'arrival_city' => 'required',
-            'number_animals' => 'required',
             'description' => 'required',
             'company' => 'required',
+            'image' => 'required'
         ]);
 
         if ($validator->fails())

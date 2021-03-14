@@ -17,9 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id
  * @property int $type_search_id
  * @property Carbon $date
+ * @property string $animal_name
  * @property string $departure_city
  * @property string $arrival_city
- * @property int $number_animals
  * @property string $description
  * @property string $company
  * @property string|null $image
@@ -37,9 +37,8 @@ class Ad extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'user_id' => 'int',
+		// 'user_id' => 'int',
 		'type_search_id' => 'int',
-		'number_animals' => 'int'
 	];
 
 	protected $dates = [
@@ -48,12 +47,12 @@ class Ad extends Model
 	];
 
 	protected $fillable = [
+		'animal_name',
 		'user_id',
 		'type_search_id',
 		'date',
 		'departure_city',
 		'arrival_city',
-		'number_animals',
 		'description',
 		'company',
 		'image',

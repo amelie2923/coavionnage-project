@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\PlaneTicket;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,7 +39,15 @@ class PlaneTicketController extends Controller
             return response(['errors' => $validator->errors()->all()], 422);
         }
 
-        PlaneTicket::create($request->all());
+        $planeTicket = PlaneTicket::create(([
+            'date' => $request->input('date'),
+            'departure_city' => $request->input('departure_city'),
+            'arrival_city' =>$request->input('arrival_city'),
+            'description' => $request->input('description'),
+            'company' => $request->input('company'),
+            'user_id' => 35,
+        ]));
+        return response()->json($planeTicket);
     }
 
     /**

@@ -22,6 +22,13 @@ use App\Http\Controllers\Api\PlaneTicketController;
 */
 
 Route::group(['middleware' => ['json.response']], function () {
+    //Ads Routes
+    //To-do : add this to priate route, this is just for testing
+    Route::get('ads', [AdController::class, 'index']);
+    Route::post('ads/add', [AdController::class, 'store']);
+    Route::get('ads/{ad}', [AdController::class, 'show']);
+    Route::put('ads/edit/{ad}', [AdController::class, 'update']);
+    Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
     ////////////////////// Public routes //////////////////////
     // Auth Routes
     Route::post('register', [AuthController::class, 'register']);
@@ -32,9 +39,8 @@ Route::group(['middleware' => ['json.response']], function () {
     /* To do -> add to private routes */
     // Ads Routes -> add a middleware role -> and add to protected routes
     Route::middleware(['association'])->group(function () {
-        Route::post('ads/add', [AdController::class, 'store']);
-        Route::put('ads/edit/{ad}', [AdController::class, 'update']);
-        Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
+        // Route::put('ads/edit/{ad}', [AdController::class, 'update']);
+        // Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
     });
 
     /* To do -> add to private routes */
@@ -53,11 +59,7 @@ Route::group(['middleware' => ['json.response']], function () {
     // Auth Routes
     Route::post('logout', [AuthController::class, 'logout']);
 
-    //Ads Routes
-    Route::get('ads', [AdController::class, 'index']);
-    Route::get('ads/{ad}', [AdController::class, 'show']);
-
-    //Ads Routes
+    //Plane tickets Routes
     Route::get('planetickets', [PlaneTicketController::class, 'index']);
     Route::get('planetickets/{id}', [PlaneTicketController::class, 'show']);
 
