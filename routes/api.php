@@ -25,7 +25,7 @@ Route::group(['middleware' => ['json.response']], function () {
     //Ads Routes
     //To-do : add this to priate route, this is just for testing
     Route::get('ads', [AdController::class, 'index']);
-    Route::post('ads/add', [AdController::class, 'store']);
+    Route::post('ads/add', [AdController::class, 'store'])->middleware('react');;
     Route::get('ads/{ad}', [AdController::class, 'show']);
     Route::put('ads/edit/{ad}', [AdController::class, 'update']);
     Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);

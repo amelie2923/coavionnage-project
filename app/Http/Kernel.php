@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'react' => \App\Http\Middleware\React::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'traveller' => \App\Http\Middleware\Traveller::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,

@@ -26,6 +26,7 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json(auth('api')->user());
         $fullFileName = $request->file('image')->getClientOriginalName();
         $fileName = pathinfo($fullFileName, PATHINFO_FILENAME);
         $extension = $request->file('image')->getClientOriginalExtension();
