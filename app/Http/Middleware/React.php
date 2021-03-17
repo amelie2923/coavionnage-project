@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class React
 {
@@ -15,22 +15,18 @@ class React
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        //verify if user token is passed in header
-        $token = $request->bearerToken();
-        if(!$token){
+        $token = $request->header('API-TOKEN');
+        if(!$token) {
             return response()->json(['message' => 'Missing token'], 403);
         }
-        // $request->user()->id
-        // auth('api')->user()
-        // $user = $request->auth('api')->user()->first();
 
-        if(!$user){
-            return response()->json(['message' => 'Invalid credentials'], 403);
+        $user = User::where('api_token', $token)->first();
+        if(!$user) {
+            return response()->json(['message' => 'Invalid Credentials'], 403);
         }
-        // Auth::login($user);
-
+        Auth::login($user);
         return $next($request);
     }
 }

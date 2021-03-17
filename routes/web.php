@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+////////////////////// Providers routes //////////////////////
+
+Route::get('/auth/redirect/{provider}', [GoogleController::class, 'redirect']);
+Route::get('/callback/{provider}', [GoogleController::class, 'callback']);

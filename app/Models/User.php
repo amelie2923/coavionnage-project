@@ -1,18 +1,12 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
-use App\Models\LinkedSocialAccount;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Passport\HasApiTokens;
 
 /**
  * Class User
@@ -36,7 +30,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
 
-	use HasApiTokens, Notifiable;
+	use Notifiable;
 
 	protected $table = 'users';
 	public $timestamps = false;
@@ -47,15 +41,16 @@ class User extends Authenticatable
 
 	protected $hidden = [
 		'password',
-		'remember_token'
+		// 'api_token'
 	];
 
 	protected $fillable = [
 		'email',
 		'password',
 		'name',
-		'confirm',
-		'remember_token',
+		'provider',
+		'provider_id',
+		'api_token',
 		'picture',
 		'role_id',
 	];
@@ -77,12 +72,7 @@ class User extends Authenticatable
 
 	public function favorites()
 	{
-		return $this->hasMany(Favorite::class);
-	}
-
-	public function linkedSocialAccounts()
-  {
-    return $this->hasMany(LinkedSocialAccount::class);
+		return $this->belongsTo(User::class);
 	}
 
 	public function sendPasswordResetNotification($token)

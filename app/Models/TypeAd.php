@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -11,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class TypeAd
- * 
+ *
  * @property int $id
  * @property int $name
- * 
+ *
  * @property Collection|Ad[] $ads
  *
  * @package App\Models

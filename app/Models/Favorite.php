@@ -1,20 +1,18 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Favorite
- * 
+ *
  * @property int $id
  * @property int $user_id
  * @property int $ad_id
- * 
+ * @property Carbon $created_at
+ *
  * @property Ad $ad
  * @property User $user
  *

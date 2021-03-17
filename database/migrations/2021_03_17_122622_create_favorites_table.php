@@ -17,6 +17,7 @@ class CreateFavoritesTable extends Migration
             $table->integer('id', true);
             $table->integer('user_id');
             $table->integer('ad_id')->index('favorites_ad_id');
+            $table->timestamp('created_at')->useCurrent();
             $table->index(['user_id', 'ad_id'], 'user_id');
         });
     }

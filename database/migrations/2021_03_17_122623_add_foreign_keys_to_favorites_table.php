@@ -14,8 +14,8 @@ class AddForeignKeysToFavoritesTable extends Migration
     public function up()
     {
         Schema::table('favorites', function (Blueprint $table) {
-            $table->foreign('ad_id', 'favorites_ad_id')->references('id')->on('ads')->onUpdate('RESTRICT')->onDelete('RESTRICT');
-            $table->foreign('user_id', 'favorites_user_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('ad_id', 'favorites_ad_id')->references('id')->on('ads')->onUpdate('RESTRICT')->onDelete('CASCADE');
+            $table->foreign('user_id', 'favorites_user_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });
     }
 

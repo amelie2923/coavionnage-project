@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
+// use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Http\Validation\LoginValidation;
+use App\Http\Validation\RegisterValidation;
 
 class AuthController extends BaseController
 {
@@ -17,22 +20,21 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function register (Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-        if ($validator->fails())
-        {
-            return response(['errors' => $validator->errors()->all()], 422);
+    public function register(Request $request, RegisterValidation $validation) {
+        $validator = Validator::make($request->all(), $validation->rules(), $validation->messages());
+
+        if($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
         }
-        $request['password']=Hash::make($request['password']);
-        $request['remember_token'] = Str::random(10);
-        $user = User::create($request->toArray());
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['token' => $token];
-        return response($response, 200);
+
+        $user = User::create([
+            'email' => $request->input('email'),
+            'name' => $request->input('name'),
+            'password' => bcrypt($request->input('password')),
+            'api_token' => Str::random(60)
+        ]);
+
+        return response()->json($user);
     }
 
     /**
@@ -40,28 +42,19 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function login (Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails())
-        {
-            return response(['errors' => $validator->errors()], 422);
+    public function login(request $request, LoginValidation $validation) {
+
+        $validator = Validator::make($request->all(), $validation->rules(), $validation->messages());
+
+        if($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
         }
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['token' => $token];
-                return response($response, 200);
-            } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
-            }
+
+        if(Auth::attempt([ 'email' => $request->input('email'), 'password' => $request->input('password')])) {
+            $user = User::where('email', $request->input('email'))->firstOrFail();
+            return response()->json($user);
         } else {
-            $response = ["message" =>'User does not exist'];
-            return response($response, 422);
+            return response()->json(['errors' => 'bad_credentials'], 401);
         }
     }
 
@@ -131,7 +124,7 @@ class AuthController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function logout (Request $request) {
-        $token = $request->user()->token();
+        $token = $request->user()->api_token;
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);

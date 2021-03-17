@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Ad;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AdController extends Controller
 {
@@ -15,7 +17,8 @@ class AdController extends Controller
      */
     public function index()
     {
-        return Ad::all();
+        $ads = Ad::all();
+        return response()->json($ads);
     }
 
     /**
@@ -26,7 +29,7 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
-        // return response()->json(auth('api')->user());
+        // return response()->json(Auth::user());
         $fullFileName = $request->file('image')->getClientOriginalName();
         $fileName = pathinfo($fullFileName, PATHINFO_FILENAME);
         $extension = $request->file('image')->getClientOriginalExtension();
@@ -59,7 +62,7 @@ class AdController extends Controller
             'description' => $request->input('description'),
             'company' => $request->input('company'),
             'image' => $file,
-            'user_id' => 25,
+            'user_id' => Auth::user()->id,
         ]));
         return response()->json($ad);
     }
@@ -67,21 +70,25 @@ class AdController extends Controller
    /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Add  $ad
+     * @param  \App\Models\Ad  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Ad $ad)
+    public function show($id)
     {
-        return $ad;
+        $ad = Ad::find($id);
+        if(!$ad) {
+            return response()->json(['message' => 'Resource not found'], 403);
+        }
+        return response()->json($ad);
     }
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ad  $ad
+     * @param  \App\Models\Ad  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ad $ad)
+    public function update($ad)
     {
         $validator = Validator::make($request->all(), [
             'animal_name' => 'required',
@@ -99,7 +106,7 @@ class AdController extends Controller
             return response(['errors' => $validator->errors()->all()], 422);
         }
 
-        $ad->update($request->all());
+        $ad = Ad::update($request->all());
     }
 
     /**
@@ -112,4 +119,28 @@ class AdController extends Controller
     {
         $ad->delete();
     }
+
+    public function checkFavorite($id) {
+        $ad = Ad::find($id);
+        if(Auth::user()) {
+            $favorite = Favorite::where('ad_id', $ad->id)->where('user_id', Auth::user()->id)->first();
+            if($favorite) return response()->json(true, 200);
+        }
+        return response()->json(false, 200);
+    }
+
+    public function handleFavorite($id) {
+        $ad = Ad::find($id);
+        $favorite = Favorite::where('ad_id', $ad->id)->where('user_id', Auth::user()->id)->first();
+        if($favorite) {
+            $favorite->delete();
+            return response()->json(['success' => 'Favorite deleted'], 200);
+        }
+        Favorite::create([
+            'ad_id' => $ad->id,
+            'user_id' => Auth::user()->id
+        ]);
+        return response()->json(['success' => 'Favorite added'], 200);
+    }
+
 }
