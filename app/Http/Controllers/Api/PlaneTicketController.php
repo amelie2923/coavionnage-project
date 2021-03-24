@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\PlaneTicket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class PlaneTicketController extends Controller
 {
@@ -15,7 +16,8 @@ class PlaneTicketController extends Controller
      */
     public function index()
     {
-        return PlaneTicket::all();
+        $planeTickets = PlaneTicket::all();
+        return response()->json($planeTickets);
     }
 
     /**
@@ -27,7 +29,6 @@ class PlaneTicketController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request-> all(), [
-            'user_id' => 'required',
             'date' => 'required',
             'departure_city' => 'required',
             'arrival_city' => 'required',
@@ -45,7 +46,7 @@ class PlaneTicketController extends Controller
             'arrival_city' =>$request->input('arrival_city'),
             'description' => $request->input('description'),
             'company' => $request->input('company'),
-            'user_id' => 35,
+            'user_id' => Auth::user()->id,
         ]));
         return response()->json($planeTicket);
     }
@@ -56,9 +57,13 @@ class PlaneTicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PlaneTicket $id)
+    public function show($id)
     {
-        return $planeTicket;
+        $planeTicket = PlaneTicket::find($id);
+        if(!$planeTicket) {
+            return response()->json(['message' => 'Resource not found'], 403);
+        }
+        return response()->json($planeTicket);
     }
 
     /**
@@ -70,6 +75,10 @@ class PlaneTicketController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $planeTicket = PlaneTicket::find($id);
+            if (!$planeTicket) {
+            return response(['message' => 'Id not found'], 404);
+        }
         $validator = Validator::make($request-> all(), [
             'user_id' => 'required',
             'date' => 'required',
@@ -83,7 +92,14 @@ class PlaneTicketController extends Controller
             return response(['errors' => $validator->errors()->all()], 422);
         }
 
-        PlaneTicket::update($request->all());
+        $planeTicket->date = $request->input('date');
+        $planeTicket->departure_city = $request->input('departure_city');
+        $planeTicket->arrival_city = $request->input('arrival_city');
+        $planeTicket->company = $request->input('company');
+        $planeTicket->description = $request->input('description');
+        $planeTicket->save();
+
+        return response()->json($planeTicket);
     }
 
     /**
@@ -95,5 +111,8 @@ class PlaneTicketController extends Controller
     public function destroy(PlaneTicket $id)
     {
         $planeTicket->delete();
+        return response()->json([
+            'message' => 'Plane Ticket deleted'
+        ]);
     }
 }

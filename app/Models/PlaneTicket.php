@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $company
  * @property Carbon $timestamp
  *
+ * @property User $user
+ *
  * @package App\Models
  */
 class PlaneTicket extends Model
@@ -30,7 +32,7 @@ class PlaneTicket extends Model
 
 	protected $dates = [
 		'date',
-		'timestamp'
+		'created_at'
 	];
 
 	protected $fillable = [
@@ -40,6 +42,15 @@ class PlaneTicket extends Model
 		'arrival_city',
 		'description',
 		'company',
-		'timestamp'
+		'created_at'
 	];
+
+	protected $with = [
+		'user'
+	];
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
 }

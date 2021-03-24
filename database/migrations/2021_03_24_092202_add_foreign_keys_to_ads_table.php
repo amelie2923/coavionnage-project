@@ -15,7 +15,7 @@ class AddForeignKeysToAdsTable extends Migration
     {
         Schema::table('ads', function (Blueprint $table) {
             $table->foreign('user_id', 'ads_user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreign('type_search_id', 'type_search_id')->references('id')->on('type_search')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('type_search_id', 'type_search_id')->references('id')->on('type_search')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 

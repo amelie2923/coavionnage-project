@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\AdController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\PlaneTicketController;
+use App\Http\Controllers\Api\TypeSearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('ads', [AdController::class, 'index']);
     Route::post('ads/add', [AdController::class, 'store'])->middleware('react');;
     Route::get('ads/{id}', [AdController::class, 'show'])->middleware('react');
-    Route::put('ads/edit/{ad}', [AdController::class, 'update']);
+    Route::put('ads/edit/{id}', [AdController::class, 'update']);
     Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
     Route::get('ads/{id}/checkFavorite', [AdController::class, 'checkFavorite'])->middleware('react');
     Route::get('ads/{id}/handleFavorite', [AdController::class, 'handleFavorite'])->middleware('react');
@@ -46,11 +47,11 @@ Route::group(['middleware' => ['json.response']], function () {
 
     /* To do -> add to private routes */
     // PlaneTickets routes -> add a middleware role -> and add to protected routes
-    Route::middleware(['traveller'])->group(function () {
-        Route::post('planetickets/add', [PlaneTicketController::class, 'store']);
-        Route::put('planetickets/edit/{id}', [PlaneTicketController::class, 'update']);
-        Route::delete('planetickets/delete/{id}', [PlaneTicketController::class,'destroy']);
-    });
+    // Route::middleware(['traveller'])->group(function () {
+        Route::post('planetickets/add', [PlaneTicketController::class, 'store'])->middleware('react');
+        Route::put('planetickets/edit/{id}', [PlaneTicketController::class, 'update'])->middleware('react');
+        Route::delete('planetickets/delete/{id}', [PlaneTicketController::class,'destroy'])->middleware('react');
+    // });
 
     // Roles routes
     Route::get('roles', [RoleController::class, 'index']);
@@ -65,5 +66,8 @@ Route::group(['middleware' => ['json.response']], function () {
 
     // Users Routes
     Route::get('users', [UserController::class, 'index']);
-    Route::get('user', [UserController::class, 'show']);
+    Route::get('users/{id}', [UserController::class, 'show']);
+
+    //Type search routes
+    Route::get('typesearchs', [TypeSearchController::class, 'index']);
 });

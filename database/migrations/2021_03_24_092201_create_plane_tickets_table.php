@@ -21,7 +21,7 @@ class CreatePlaneTicketsTable extends Migration
             $table->string('arrival_city');
             $table->text('description')->nullable();
             $table->string('company');
-            $table->timestamp('timestamp')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

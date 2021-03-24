@@ -24,6 +24,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Collection|Ad[] $ads
  * @property Collection|Alert[] $alerts
  * @property Collection|Favorite[] $favorites
+ * @property Collection|PlaneTicket[] $planetickets
  *
  * @package App\Models
  */
@@ -73,6 +74,11 @@ class User extends Authenticatable
 	public function favorites()
 	{
 		return $this->belongsTo(User::class);
+	}
+
+		public function planetickets()
+	{
+		return $this->hasMany(PlaneTicket::class);
 	}
 
 	public function sendPasswordResetNotification($token)

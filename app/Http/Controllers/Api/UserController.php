@@ -33,12 +33,16 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
+        $user = User::find($id);
+        if(!$user) {
+            return response()->json(['message' => 'User not found'], 403);
+        }
+        return response()->json($user);
     }
 
     /**

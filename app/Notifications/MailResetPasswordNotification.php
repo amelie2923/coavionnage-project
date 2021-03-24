@@ -13,7 +13,11 @@ use Illuminate\Auth\Notifications\ResetPassword;
 class MailResetPasswordNotification extends Notification
 {
     use Queueable;
+
     protected $pageURL;
+
+    public static $toMailCallback;
+
     public $token;
 
     /**
@@ -23,8 +27,8 @@ class MailResetPasswordNotification extends Notification
      */
     public function __construct()
     {
-        parent::__construct($token);
-        $this->pageUrl = 'localhost:8080';
+        // parent::__construct($token);
+        // $this->pageUrl = 'localhost:1080';
         // we can set whatever we want here, or use .env to set environmental variables
     }
 
@@ -54,11 +58,11 @@ class MailResetPasswordNotification extends Notification
             // ->line('The introduction to the notification.')
             // ->action('Notification Action', url('/'))
             // ->line('Thank you for using our application!');
-            ->subject(Lang::getFromJson('Reset Password'))
-            ->line(Lang::getFromJson('You are receiving this email because we received a password reset request for your account.'))
-            ->action(Lang::getFromJson('Reset Password'), $this->pageUrl."?token=".$this->token)
-            ->line(Lang::getFromJson('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
-            ->line(Lang::getFromJson('If you did not request a password reset, no further action is required.'));
+            ->subject(Lang::get('Reset Password'))
+            ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
+            ->action(Lang::get('Reset Password'), $this->pageUrl."?token=".$this->token)
+            ->line(Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
+            ->line(Lang::get('If you did not request a password reset, no further action is required.'));
     }
 
     /**

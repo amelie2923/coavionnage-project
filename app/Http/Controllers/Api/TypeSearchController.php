@@ -14,7 +14,8 @@ class TypeSearchController extends Controller
      */
     public function index()
     {
-        //
+        $typesearchs = TypeSearch::all();
+        return response()->json($typesearchs);
     }
 
     /**
