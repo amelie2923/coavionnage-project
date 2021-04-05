@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+// use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class NotificationController extends Controller
-{
+class NotificationController extends Controller{
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,9 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $notifications = Notification::all()->where('notifiable_id', $user->id);
+        return response()->json($notifications);
     }
 
     /**
@@ -36,7 +40,11 @@ class NotificationController extends Controller
      */
     public function show($id)
     {
-        //
+        $notification = Notification::find($id);
+        if(!$notification) {
+            return response()->json(['message' => 'Resource not found'], 403);
+        }
+        return response()->json($notification);
     }
 
     /**

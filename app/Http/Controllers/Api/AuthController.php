@@ -18,7 +18,7 @@ use Illuminate\Auth\Events\PasswordReset;
 class AuthController extends BaseController
 {
     /**
-     * Register api
+     * Register user api
      *
      * @return \Illuminate\Http\Response
      */
@@ -33,7 +33,31 @@ class AuthController extends BaseController
             'email' => $request->input('email'),
             'name' => $request->input('name'),
             'password' => bcrypt($request->input('password')),
-            'api_token' => Str::random(60)
+            'api_token' => Str::random(60),
+            'role_id' => 2,
+        ]);
+
+        return response()->json($user);
+    }
+
+        /**
+     * Register asso api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function registerAssociation(Request $request, RegisterValidation $validation) {
+        $validator = Validator::make($request->all(), $validation->rules(), $validation->messages());
+
+        if($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $user = User::create([
+            'email' => $request->input('email'),
+            'name' => $request->input('name'),
+            'password' => bcrypt($request->input('password')),
+            'api_token' => Str::random(60),
+            'role_id' => 1,
         ]);
 
         return response()->json($user);
@@ -126,9 +150,11 @@ class AuthController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function logout (Request $request) {
-        $token = $request->user()->api_token;
-        $token->revoke();
-        $response = ['message' => 'You have been successfully logged out!'];
-        return response($response, 200);
+        if (Auth::user()) {
+            $user = Auth::user();
+            $user->api_token = null; // clear api token
+            $user->save();
+        }
+        return response()->json(['message' => 'You have been successfully logout'], 200);
     }
 }

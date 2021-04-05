@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Notifications\FavoriteNotification;
 
 class UserController extends Controller
 {
@@ -67,4 +70,9 @@ class UserController extends Controller
     {
         $user->delete();
     }
+
+    // public function test(Request $request, User $user) {
+    //     $user = Auth::user();
+    //     $user->notify(new FavoriteNotification(User::findOrFail(41)));
+    // }
 }

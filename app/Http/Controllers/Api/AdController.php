@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Ad;
 use App\Models\Favorite;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+
+use App\Notifications\FavoriteNotification;
 
 class AdController extends Controller
 {
@@ -117,7 +120,6 @@ class AdController extends Controller
             return response(['errors' => $validator->errors()->all()], 422);
         }
 
-
         $ad->animal_name = $request->input('animal_name');
         $ad->type_search_id = $request->input('type_search_id');
         $ad->date = $request->input('date');
@@ -145,6 +147,11 @@ class AdController extends Controller
         ]);
     }
 
+    //For notif :
+        // auth user id (notifiable_id)
+        // user_id
+        // ad_id
+
     public function checkFavorite($id) {
         $ad = Ad::find($id);
         if(Auth::user()) {
@@ -163,9 +170,14 @@ class AdController extends Controller
         }
         Favorite::create([
             'ad_id' => $ad->id,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
         ]);
+
+        $favorite = Favorite::where('ad_id', $ad->id)->first();
+        $userId = $favorite->user_id;
+        $user = Auth::user();
+        $user->notify(new FavoriteNotification(User::findOrFail($userId), $favorite));
+
         return response()->json(['success' => 'Favorite added'], 200);
     }
-
 }

@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\PlaneTicketController;
 use App\Http\Controllers\Api\TypeSearchController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\AssociationDashboardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +28,7 @@ Route::group(['middleware' => ['json.response']], function () {
     //Ads Routes
     //To-do : add this to priate route, this is just for testing
     Route::get('ads', [AdController::class, 'index']);
-    Route::post('ads/add', [AdController::class, 'store'])->middleware('react');;
+    Route::post('ads/add', [AdController::class, 'store'])->middleware('react');
     Route::get('ads/{id}', [AdController::class, 'show'])->middleware('react');
     Route::put('ads/edit/{id}', [AdController::class, 'update']);
     Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
@@ -34,9 +37,10 @@ Route::group(['middleware' => ['json.response']], function () {
     ////////////////////// Public routes //////////////////////
     // Auth Routes
     Route::post('register', [AuthController::class, 'register']);
+    Route::post('association-register', [AuthController::class, 'registerAssociation']);
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('password/forgot-password', [AuthController::class, 'sendResetLinkResponse'])->name('password.sent');
-    Route::post('password/reset', [AuthController::class, 'sendResetResponse'])->name('password.reset');
+    Route::post('password/forgot-password', [AuthController::class, 'sendResetLinkResponse'])->name('passwords.sent');
+    Route::post('password/reset', [AuthController::class, 'sendResetResponse'])->name('passwords.reset');
 
     /* To do -> add to private routes */
     // Ads Routes -> add a middleware role -> and add to protected routes
@@ -67,7 +71,15 @@ Route::group(['middleware' => ['json.response']], function () {
     // Users Routes
     Route::get('users', [UserController::class, 'index']);
     Route::get('users/{id}', [UserController::class, 'show']);
-
+    Route::get('users/profile', [UserController::class, 'profile']);
     //Type search routes
     Route::get('typesearchs', [TypeSearchController::class, 'index']);
+
+    // Route::get('test', [UserController::class, 'test'])->middleware('react');
+
+    Route::get('notifications', [NotificationController::class, 'index'])->middleware('react');
+    Route::get('notifications/{id}', [NotificationController::class, 'show'])->middleware('react');
+
+    // Route::get('association-ads', [AssociationDashboardController::class, 'index'])->middleware('react');
+    // Route::get('association-ads/{id}', [AssociationDashboardController::class, 'show'])->middleware('react');
 });
