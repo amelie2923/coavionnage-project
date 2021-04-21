@@ -11,17 +11,15 @@ class FavoriteNotification extends Notification
 {
     use Queueable;
 
-    public $user;
-    public $favorite;
+    protected $favorite;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user, $favorite)
+    public function __construct($favorite)
     {
-        $this->user = $user;
         $this->favorite = $favorite;
     }
 
@@ -45,7 +43,6 @@ class FavoriteNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'user_name' => $this->user->name,
             'ad_id' => $this->favorite->ad_id,
             'user_id' => $this->favorite->user_id,
         ];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,8 +72,14 @@ class UserController extends Controller
         $user->delete();
     }
 
-    // public function test(Request $request, User $user) {
-    //     $user = Auth::user();
-    //     $user->notify(new FavoriteNotification(User::findOrFail(41)));
-    // }
+    public function profile()
+    {
+        $user = Auth::user();
+        // $id = $user->id;
+        $profile = User::where('id', $user->id)->first();
+        if(!$profile) {
+            return response()->json(['message' => 'Profile not found'], 403);
+        }
+        return response()->json($profile);
+    }
 }

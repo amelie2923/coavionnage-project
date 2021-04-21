@@ -49,6 +49,7 @@ class AdController extends Controller
             'company' => 'required',
             'image' => 'required',
         ]);
+        // TODO : add validator for image file
 
         if ($validator->fails())
         {
@@ -60,7 +61,7 @@ class AdController extends Controller
             'type_search_id' => $request->input('type_search_id'),
             'date' => $request->input('date'),
             'departure_city' => $request->input('departure_city'),
-            'arrival_city' =>$request->input('arrival_city'),
+            'arrival_city' => $request->input('arrival_city'),
             'description' => $request->input('description'),
             'company' => $request->input('company'),
             'image' => $file,
@@ -174,10 +175,16 @@ class AdController extends Controller
         ]);
 
         $favorite = Favorite::where('ad_id', $ad->id)->first();
-        $userId = $favorite->user_id;
-        $user = Auth::user();
-        $user->notify(new FavoriteNotification(User::findOrFail($userId), $favorite));
+        $ad->user->notify(new FavoriteNotification($favorite));
 
         return response()->json(['success' => 'Favorite added'], 200);
+    }
+
+    public function searchAds(Request $request) {
+        $searchAd = Ad::where('date', '=', $request->date)->get();
+            if (!$searchAd) {
+                return response()->json(['message' => 'Ad not found'], 403);
+            }
+        return response()->json($searchAd);
     }
 }

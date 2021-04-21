@@ -69,9 +69,9 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('planetickets/{id}', [PlaneTicketController::class, 'show']);
 
     // Users Routes
+    Route::get('/users/profile', [UserController::class, 'profile'])->middleware('react');
+    Route::get('users/{id}', [UserController::class, 'show'])->middleware('react');
     Route::get('users', [UserController::class, 'index']);
-    Route::get('users/{id}', [UserController::class, 'show']);
-    Route::get('users/profile', [UserController::class, 'profile']);
     //Type search routes
     Route::get('typesearchs', [TypeSearchController::class, 'index']);
 
@@ -82,4 +82,6 @@ Route::group(['middleware' => ['json.response']], function () {
 
     // Route::get('association-ads', [AssociationDashboardController::class, 'index'])->middleware('react');
     // Route::get('association-ads/{id}', [AssociationDashboardController::class, 'show'])->middleware('react');
+
+    Route::get('/ads/search/{date}', [AdController::class, 'searchAds']);
 });

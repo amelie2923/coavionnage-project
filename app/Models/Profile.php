@@ -31,7 +31,6 @@ class Profile extends Model
 	protected $fillable = [
 		'user_id',
 		'address',
-		'mail',
 		'phone'
 	];
 

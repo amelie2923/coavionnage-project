@@ -101,7 +101,7 @@ class AuthController extends BaseController
         $response =  Password::sendResetLink($input);
         if($response == Password::RESET_LINK_SENT){
             $message = "Mail send successfully";
-        }else{
+        } else{
         $message = "Email could not be sent to this email address";
         }
         //$message = $response == Password::RESET_LINK_SENT ? 'Mail sendsuccessfully' : GLOBAL_SOMETHING_WANTS_TO_WRONG;

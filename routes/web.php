@@ -23,5 +23,5 @@ Route::get('/', function () {
 Route::get('/auth/redirect/{provider}', [GoogleController::class, 'redirect']);
 Route::get('/callback/{provider}', [GoogleController::class, 'callback']);
 
-Route::get('/auth/redirect/{provider}', [FacebookController::class, 'redirect']);
-Route::get('/callback/{provider}', [FacebookController::class, 'callback']);
+// Route::get('/auth/redirect/{provider}', [FacebookController::class, 'redirect']);
+// Route::get('/callback/{provider}', [FacebookController::class, 'callback']);

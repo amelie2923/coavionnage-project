@@ -56,6 +56,10 @@ class User extends Authenticatable
 		'role_id',
 	];
 
+	protected $with = [
+		'profile'
+	];
+
 	public function role()
 	{
 		return $this->belongsTo(Role::class);

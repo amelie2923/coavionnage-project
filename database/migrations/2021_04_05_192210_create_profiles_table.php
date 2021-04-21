@@ -17,7 +17,6 @@ class CreateProfilesTable extends Migration
             $table->integer('id')->primary();
             $table->integer('user_id')->index('profile_user_id');
             $table->string('address');
-            $table->string('mail');
             $table->string('phone');
         });
     }
