@@ -18,11 +18,39 @@ class AdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function index(Request $request)
     {
         $ads = Ad::all();
+
+        $date = $request->get('date');
+        if ($date) {
+            $searchAd = Ad::where('date', '=', $request->get('date'))->get();
+            // Verif si tableau vide car retourne 200
+            if (!$searchAd) {
+                return response()->json(['message' => 'Ad not found'], 403);
+            }
+            return response()->json($searchAd);
+        }
         return response()->json($ads);
     }
+
+    // display latest
+    // public function index(Request $request)
+    // {
+    //     $ads = Ad::all()->sortByDesc("created_at");
+
+    //     $date = $request->get('date');
+
+    //     if ($date) {
+    //         $searchAd = Ad::where('date', '=', $request->get('date'))->get();
+    //         if (!$searchAd) {
+    //             return response()->json(['message' => 'Ad not found'], 403);
+    //         }
+    //         return response()->json($searchAd);
+    //     }
+    //     return response()->json($ads);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -32,6 +60,8 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
+        // TODO : add validator for image file
+
         $fullFileName = $request->file('image')->getClientOriginalName();
         $fileName = pathinfo($fullFileName, PATHINFO_FILENAME);
         $extension = $request->file('image')->getClientOriginalExtension();
@@ -49,7 +79,6 @@ class AdController extends Controller
             'company' => 'required',
             'image' => 'required',
         ]);
-        // TODO : add validator for image file
 
         if ($validator->fails())
         {
@@ -148,6 +177,13 @@ class AdController extends Controller
         ]);
     }
 
+    // public function getLastAds(Request $request) {
+    //     // $ads = Ad::all();
+    //     // $latestAds = $this->$ads->orderBy('created_at', 'desc')->first();
+    //     $latestAds = Ad::orderBy('created_ad', 'desc');
+    //     return response()->json($latestAds);
+    // }
+
     //For notif :
         // auth user id (notifiable_id)
         // user_id
@@ -175,16 +211,12 @@ class AdController extends Controller
         ]);
 
         $favorite = Favorite::where('ad_id', $ad->id)->first();
+        //get animal name
+        //get user name
+        // $animal_name = Ad::where(");
+        // $user_name = Ad::where();
         $ad->user->notify(new FavoriteNotification($favorite));
 
         return response()->json(['success' => 'Favorite added'], 200);
-    }
-
-    public function searchAds(Request $request) {
-        $searchAd = Ad::where('date', '=', $request->date)->get();
-            if (!$searchAd) {
-                return response()->json(['message' => 'Ad not found'], 403);
-            }
-        return response()->json($searchAd);
     }
 }

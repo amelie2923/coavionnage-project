@@ -14,9 +14,18 @@ class PlaneTicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $planeTickets = PlaneTicket::all();
+        $date = $request->get('date');
+        if ($date) {
+            $searchFlight = PlaneTicket::where('date', '=', $request->get('date'))->get();
+            // Verif si tableau vide car retourne 200
+            if (!$searchFlight) {
+                return response()->json(['message' => 'Planeticket not found'], 403);
+            }
+            return response()->json($searchFlight);
+        }
         return response()->json($planeTickets);
     }
 

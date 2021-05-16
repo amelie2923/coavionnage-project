@@ -75,7 +75,6 @@ class UserController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        // $id = $user->id;
         $profile = User::where('id', $user->id)->first();
         if(!$profile) {
             return response()->json(['message' => 'Profile not found'], 403);

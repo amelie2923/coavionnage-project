@@ -15,9 +15,10 @@ class CreateAlertsTable extends Migration
     {
         Schema::create('alerts', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('arrival');
-            $table->string('departure');
+            $table->string('departure_city');
+            $table->string('arrival_city');
             $table->date('date');
+            $table->string('company')->nullable();
             $table->integer('user_id')->index('user_id');
         });
     }

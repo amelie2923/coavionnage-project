@@ -1,20 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Models\Ad;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AssociationDashboardController extends Controller
 {
-
-
     // Get token of user logged by middleware
     // Retrieve role_id of user
     // Access to Dashboard if user role is 1
-
 
     /**
      * Display a listing of the resource.
@@ -24,7 +22,10 @@ class AssociationDashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $ads = Ad::all()->where('user_id', $user->id);;
+        $ads = Ad::all()->where('user_id', $user->id);
+        if (!$ads) {
+            return response()->json(['message' => 'you haven\'t posted an ad yet'], 403);
+            }
         return response()->json($ads);
     }
 

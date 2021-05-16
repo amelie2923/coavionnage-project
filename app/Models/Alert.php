@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Model;
  * Class Alert
  *
  * @property int $id
- * @property string $arrival
- * @property string $departure
+ * @property string $departure_city
+ * @property string $arrival_city
  * @property Carbon $date
+ * @property string $company
  * @property int $user_id
  *
  * @property User $user
@@ -32,9 +33,10 @@ class Alert extends Model
 	];
 
 	protected $fillable = [
-		'arrival',
-		'departure',
+		'departure_city',
+		'arrival_city',
 		'date',
+		'company',
 		'user_id'
 	];
 
@@ -42,4 +44,8 @@ class Alert extends Model
 	{
 		return $this->belongsTo(User::class);
 	}
+
+	protected $with = [
+		'user'
+	];
 }

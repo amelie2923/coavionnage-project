@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\PlaneTicketController;
 use App\Http\Controllers\Api\TypeSearchController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\AssociationDashboardController;
-
+use App\Http\Controllers\Api\AlertController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +26,12 @@ use App\Http\Controllers\Api\AssociationDashboardController;
 
 Route::group(['middleware' => ['json.response']], function () {
     //Ads Routes
+    // Route::get('/ads/search', [AdController::class, 'searchAds']);
     //To-do : add this to priate route, this is just for testing
     Route::get('ads', [AdController::class, 'index']);
+    Route::get('ads/latest', [AdController::class, 'getLastAds']);
     Route::post('ads/add', [AdController::class, 'store'])->middleware('react');
-    Route::get('ads/{id}', [AdController::class, 'show'])->middleware('react');
+    Route::get('ads/{id}', [AdController::class, 'show']);
     Route::put('ads/edit/{id}', [AdController::class, 'update']);
     Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
     Route::get('ads/{id}/checkFavorite', [AdController::class, 'checkFavorite'])->middleware('react');
@@ -52,10 +54,17 @@ Route::group(['middleware' => ['json.response']], function () {
     /* To do -> add to private routes */
     // PlaneTickets routes -> add a middleware role -> and add to protected routes
     // Route::middleware(['traveller'])->group(function () {
-        Route::post('planetickets/add', [PlaneTicketController::class, 'store'])->middleware('react');
-        Route::put('planetickets/edit/{id}', [PlaneTicketController::class, 'update'])->middleware('react');
-        Route::delete('planetickets/delete/{id}', [PlaneTicketController::class,'destroy'])->middleware('react');
+    Route::post('planetickets/add', [PlaneTicketController::class, 'store'])->middleware('react');
+    Route::put('planetickets/edit/{id}', [PlaneTicketController::class, 'update'])->middleware('react');
+    Route::delete('planetickets/delete/{id}', [PlaneTicketController::class,'destroy'])->middleware('react');
     // });
+
+    // Alerts routes
+    Route::get('alerts', [AlertController::class, 'index']);
+    Route::get('alerts/{id}', [AlertController::class, 'show'])->middleware('react');
+    Route::post('alerts/add', [AlertController::class, 'store'])->middleware('react');
+    Route::put('alerts/edit/{id}', [AlertController::class, 'update'])->middleware('react');
+    Route::delete('alerts/delete/{id}', [AlertController::class,'destroy'])->middleware('react');
 
     // Roles routes
     Route::get('roles', [RoleController::class, 'index']);
@@ -80,8 +89,6 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('notifications', [NotificationController::class, 'index'])->middleware('react');
     Route::get('notifications/{id}', [NotificationController::class, 'show'])->middleware('react');
 
-    // Route::get('association-ads', [AssociationDashboardController::class, 'index'])->middleware('react');
-    // Route::get('association-ads/{id}', [AssociationDashboardController::class, 'show'])->middleware('react');
-
-    Route::get('/ads/search/{date}', [AdController::class, 'searchAds']);
+    Route::get('association/ads', [AssociationDashboardController::class, 'index'])->middleware('react');
+    Route::get('association/ads/{id}', [AssociationDashboardController::class, 'show'])->middleware('react');
 });
