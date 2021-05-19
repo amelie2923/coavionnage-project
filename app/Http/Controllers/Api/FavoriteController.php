@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
@@ -14,7 +15,12 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $favorites = Favorite::all()->where('user_id', $user->id);
+        if (!$favorites) {
+            return response()->json(['message' => 'You haven\'t have favorites yet'], 403);
+        }
+        return response()->json($favorites);
     }
 
     /**

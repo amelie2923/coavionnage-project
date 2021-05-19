@@ -16,7 +16,6 @@ class LoginValidation {
         return [
             'email.required' => 'Vous devez spécifier votre email',
             'password.required' => 'Vous devez spécifier votre mot de passe',
-
         ];
     }
 }

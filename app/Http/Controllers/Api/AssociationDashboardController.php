@@ -21,11 +21,12 @@ class AssociationDashboardController extends Controller
      */
     public function index()
     {
+        // unuesed ?
         $user = Auth::user();
-        $ads = Ad::all()->where('user_id', $user->id);
+        $ads = Ad::all()->where('user_id', $user->id)->values();
         if (!$ads) {
             return response()->json(['message' => 'you haven\'t posted an ad yet'], 403);
-            }
+        }
         return response()->json($ads);
     }
 

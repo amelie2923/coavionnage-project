@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\PlaneTicket;
 use Illuminate\Http\Request;
+use App\Models\Alert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+
+use App\Notifications\AlertNotification;
 
 class PlaneTicketController extends Controller
 {
@@ -57,6 +60,16 @@ class PlaneTicketController extends Controller
             'company' => $request->input('company'),
             'user_id' => Auth::user()->id,
         ]));
+
+        //send alert notif here
+
+        // $alert = Alert::where('date', '=', $request->input('date'),'departure_city', '=', $request->input('departure_city'), 'arrival_city', '=', $request->input('arrival_city'), 'company', '=', $request->input('company')->get());
+
+        if($planeTicket && $alert) {
+            //send notiif
+            $alert->user->notify(new AlertNotification($planeTicket));
+        }
+
         return response()->json($planeTicket);
     }
 

@@ -19,31 +19,14 @@ class AdController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(Request $request)
-    {
-        $ads = Ad::all();
-
-        $date = $request->get('date');
-        if ($date) {
-            $searchAd = Ad::where('date', '=', $request->get('date'))->get();
-            // Verif si tableau vide car retourne 200
-            if (!$searchAd) {
-                return response()->json(['message' => 'Ad not found'], 403);
-            }
-            return response()->json($searchAd);
-        }
-        return response()->json($ads);
-    }
-
-    // display latest
     // public function index(Request $request)
     // {
-    //     $ads = Ad::all()->sortByDesc("created_at");
+    //     $ads = Ad::all();
 
     //     $date = $request->get('date');
-
     //     if ($date) {
     //         $searchAd = Ad::where('date', '=', $request->get('date'))->get();
+    //         // Verif si tableau vide car retourne 200
     //         if (!$searchAd) {
     //             return response()->json(['message' => 'Ad not found'], 403);
     //         }
@@ -51,6 +34,23 @@ class AdController extends Controller
     //     }
     //     return response()->json($ads);
     // }
+
+    // display latest
+    public function index(Request $request)
+    {
+        $ads = Ad::all()->sortByDesc("created_at")->values();
+
+        $date = $request->get('date');
+
+        if ($date) {
+            $searchAd = Ad::where('date', '=', $request->get('date'))->get();
+            if (!$searchAd) {
+                return response()->json(['message' => 'Ad not found'], 403);
+            }
+            return response()->json($searchAd);
+        }
+        return response()->json($ads);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -121,7 +121,6 @@ class AdController extends Controller
      */
    public function update(Request $request, $id)
     {
-
         $ad = Ad::find($id);
             if (!$ad) {
             return response(['message' => 'Id not found'], 404);

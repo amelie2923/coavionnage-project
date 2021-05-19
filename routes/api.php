@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\TypeSearchController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\AssociationDashboardController;
 use App\Http\Controllers\Api\AlertController;
+use App\Http\Controllers\Api\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,16 +30,20 @@ Route::group(['middleware' => ['json.response']], function () {
     // Route::get('/ads/search', [AdController::class, 'searchAds']);
     //To-do : add this to priate route, this is just for testing
     Route::get('ads', [AdController::class, 'index']);
-    Route::get('ads/latest', [AdController::class, 'getLastAds']);
+    // change route name with query string
+    // Route::get('ads/latest', [AdController::class, 'getLastAds']);
     Route::post('ads/add', [AdController::class, 'store'])->middleware('react');
     Route::get('ads/{id}', [AdController::class, 'show']);
     Route::put('ads/edit/{id}', [AdController::class, 'update']);
     Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
+    // Change name of theses 2 routes with query strings ?
     Route::get('ads/{id}/checkFavorite', [AdController::class, 'checkFavorite'])->middleware('react');
     Route::get('ads/{id}/handleFavorite', [AdController::class, 'handleFavorite'])->middleware('react');
+    Route::get('favorites', [FavoriteController::class, 'index'])->middleware('react');
     ////////////////////// Public routes //////////////////////
     // Auth Routes
     Route::post('register', [AuthController::class, 'register']);
+    // Rename with query string
     Route::post('association-register', [AuthController::class, 'registerAssociation']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('password/forgot-password', [AuthController::class, 'sendResetLinkResponse'])->name('passwords.sent');

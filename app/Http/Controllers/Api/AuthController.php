@@ -32,7 +32,7 @@ class AuthController extends BaseController
         $user = User::create([
             'email' => $request->input('email'),
             'name' => $request->input('name'),
-            'password' => bcrypt($request->input('password')),
+            'password' => Hash::make($request->input('password')),
             'api_token' => Str::random(60),
             'role_id' => 2,
         ]);
@@ -55,7 +55,7 @@ class AuthController extends BaseController
         $user = User::create([
             'email' => $request->input('email'),
             'name' => $request->input('name'),
-            'password' => bcrypt($request->input('password')),
+            'password' => Hash::make($request->input('password')),
             'api_token' => Str::random(60),
             'role_id' => 1,
         ]);
@@ -152,7 +152,11 @@ class AuthController extends BaseController
     public function logout (Request $request) {
         if (Auth::user()) {
             $user = Auth::user();
-            $user->api_token = null; // clear api token
+            $api_token = $user->api_token;
+            $retrieveToken = User::find($api_token);
+            $retrieveToken = null;
+            // $user->api_token = null; // clear api token
+            // $api_token->delete();
             $user->save();
         }
         return response()->json(['message' => 'You have been successfully logout'], 200);
