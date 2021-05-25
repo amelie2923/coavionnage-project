@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\AssociationDashboardController;
 use App\Http\Controllers\Api\AlertController;
 use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,13 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::put('ads/edit/{id}', [AdController::class, 'update']);
     Route::delete('ads/delete/{ad}', [AdController::class, 'destroy']);
     // Change name of theses 2 routes with query strings ?
+
     Route::get('ads/{id}/checkFavorite', [AdController::class, 'checkFavorite'])->middleware('react');
+
     Route::get('ads/{id}/handleFavorite', [AdController::class, 'handleFavorite'])->middleware('react');
+
     Route::get('favorites', [FavoriteController::class, 'index'])->middleware('react');
+
     ////////////////////// Public routes //////////////////////
     // Auth Routes
     Route::post('register', [AuthController::class, 'register']);
@@ -83,7 +88,9 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('planetickets/{id}', [PlaneTicketController::class, 'show']);
 
     // Users Routes
-    Route::get('/users/profile', [UserController::class, 'profile'])->middleware('react');
+    Route::get('/users/profile', [UserController::class, 'authUserProfile'])->middleware('react');
+    Route::post('/profile/add', [ProfileController::class, 'store'])->middleware('react');
+    Route::get('/profile', [ProfileController::class, 'show']);
     Route::get('users/{id}', [UserController::class, 'show'])->middleware('react');
     Route::get('users', [UserController::class, 'index']);
     //Type search routes

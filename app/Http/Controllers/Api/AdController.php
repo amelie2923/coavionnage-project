@@ -60,8 +60,6 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO : add validator for image file
-
         $fullFileName = $request->file('image')->getClientOriginalName();
         $fileName = pathinfo($fullFileName, PATHINFO_FILENAME);
         $extension = $request->file('image')->getClientOriginalExtension();
@@ -70,14 +68,14 @@ class AdController extends Controller
         $request->file('image')->storeAs('public/pictures', $file);
 
         $validator = Validator::make($request->all(), [
-            'animal_name' => 'required',
-            'type_search_id' => 'required',
-            'date' => 'required',
-            'departure_city' => 'required',
-            'arrival_city' => 'required',
-            'description' => 'required',
-            'company' => 'required',
-            'image' => 'required',
+            'animal_name' => ['required', 'string'],
+            'type_search_id' => ['required', 'integer'],
+            'date' => ['required', 'date'],
+            'departure_city' => ['required', 'string'],
+            'arrival_city' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'company' => ['required', 'string'],
+            'image' => ['required', 'image'],
         ]);
 
         if ($validator->fails())
@@ -134,14 +132,14 @@ class AdController extends Controller
         $request->file('image')->storeAs('public/pictures', $file);
 
         $validator = Validator::make($request->all(), [
-            'animal_name' => 'required',
-            'type_search_id' => 'required',
-            'date' => 'required',
-            'departure_city' => 'required',
-            'arrival_city' => 'required',
-            'description' => 'required',
-            'company' => 'required',
-            'image' => 'required'
+            'animal_name' => $request->input('animal_name'),
+            'type_search_id' => $request->input('type_search_id'),
+            'date' => $request->input('date'),
+            'departure_city' => $request->input('departure_city'),
+            'arrival_city' => $request->input('arrival_city'),
+            'description' => $request->input('description'),
+            'company' => $request->input('company'),
+            'image' => $file,
         ]);
 
         if ($validator->fails())
@@ -176,13 +174,6 @@ class AdController extends Controller
         ]);
     }
 
-    // public function getLastAds(Request $request) {
-    //     // $ads = Ad::all();
-    //     // $latestAds = $this->$ads->orderBy('created_at', 'desc')->first();
-    //     $latestAds = Ad::orderBy('created_ad', 'desc');
-    //     return response()->json($latestAds);
-    // }
-
     //For notif :
         // auth user id (notifiable_id)
         // user_id
@@ -190,6 +181,9 @@ class AdController extends Controller
 
     public function checkFavorite($id) {
         $ad = Ad::find($id);
+        if (!$ad) {
+            return response(['message' => 'Ad not found'], 404);
+        }
         if(Auth::user()) {
             $favorite = Favorite::where('ad_id', $ad->id)->where('user_id', Auth::user()->id)->first();
             if($favorite) return response()->json(true, 200);
@@ -199,22 +193,20 @@ class AdController extends Controller
 
     public function handleFavorite($id) {
         $ad = Ad::find($id);
+        if (!$ad) {
+            return response(['message' => 'Ad not found'], 404);
+        }
         $favorite = Favorite::where('ad_id', $ad->id)->where('user_id', Auth::user()->id)->first();
         if($favorite) {
             $favorite->delete();
             return response()->json(['success' => 'Favorite deleted'], 200);
         }
-        Favorite::create([
+        $createFavorite = Favorite::create([
             'ad_id' => $ad->id,
             'user_id' => Auth::user()->id,
         ]);
 
-        $favorite = Favorite::where('ad_id', $ad->id)->first();
-        //get animal name
-        //get user name
-        // $animal_name = Ad::where(");
-        // $user_name = Ad::where();
-        $ad->user->notify(new FavoriteNotification($favorite));
+        $ad->user->notify(new FavoriteNotification($createFavorite));
 
         return response()->json(['success' => 'Favorite added'], 200);
     }

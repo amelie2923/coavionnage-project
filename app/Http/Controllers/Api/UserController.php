@@ -72,7 +72,7 @@ class UserController extends Controller
         $user->delete();
     }
 
-    public function profile()
+    public function authUserProfile()
     {
         $user = Auth::user();
         $profile = User::where('id', $user->id)->first();
@@ -81,4 +81,5 @@ class UserController extends Controller
         }
         return response()->json($profile);
     }
+
 }
