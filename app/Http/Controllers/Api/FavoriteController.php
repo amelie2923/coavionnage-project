@@ -16,7 +16,7 @@ class FavoriteController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $favorites = Favorite::all()->where('user_id', $user->id);
+        $favorites = Favorite::all()->where('user_id', $user->id)->values();
         if (!$favorites) {
             return response()->json(['message' => 'You haven\'t have favorites yet'], 403);
         }

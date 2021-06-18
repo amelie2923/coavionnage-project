@@ -100,6 +100,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
     Route::get('notifications', [NotificationController::class, 'index'])->middleware('react');
     Route::get('notifications/{id}', [NotificationController::class, 'show'])->middleware('react');
+    Route::delete('notifications/delete/{notification}', [NotificationController::class, 'destroy'])->middleware('react');
 
     Route::get('association/ads', [AssociationDashboardController::class, 'index'])->middleware('react');
     Route::get('association/ads/{id}', [AssociationDashboardController::class, 'show'])->middleware('react');

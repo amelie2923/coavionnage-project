@@ -17,7 +17,10 @@ class NotificationController extends Controller{
     public function index()
     {
         $user = Auth::user();
-        $notifications = Notification::all()->where('notifiable_id', $user->id);
+        $notifications = Notification::all()->where('notifiable_id', $user->id)->values();
+        if (!$notifications) {
+            return response()->json(['message' => 'no favorites'], 403);
+        }
         return response()->json($notifications);
     }
 
@@ -56,7 +59,7 @@ class NotificationController extends Controller{
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -65,8 +68,8 @@ class NotificationController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Notification $notification)
     {
-        //
+        $notification->delete();
     }
 }

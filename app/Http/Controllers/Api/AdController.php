@@ -13,6 +13,7 @@ use App\Notifications\FavoriteNotification;
 
 class AdController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
